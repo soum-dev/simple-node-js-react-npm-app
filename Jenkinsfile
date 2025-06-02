@@ -1,21 +1,16 @@
-pipeline{
-    agent {
-        docker {
-            image 'node:18-alpine'  // Uses a Linux Node.js container
-            args '-u root'  // Optional: run as root to avoid permission issues
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                bat 'npm install'
+            }
+        }
+        stage('Test') {
+            steps {
+                
+                bat 'wsl ./jenkins/scripts/test.sh'
+            }
         }
     }
-    stages{
-        stage('Build') {
-            steps{
-                sh 'npm install'
-            }
-        }
-        stage('Test'){
-            steps{
-                sh ' ./jenkins/scripts/test.sh'
-            }
-        }
-    }       
-    
 }
